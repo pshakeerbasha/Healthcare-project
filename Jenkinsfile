@@ -1,43 +1,43 @@
 pipeline{
     agent any
     stages{
-        stage('checkout the code from github'){
+        stage('checkout'){
             steps{
-                 git url: 'https://github.com/pshakeerbasha/Healthcare-project/'
+                 git url: 'https://github.com/akshu20791/health-care-project/'
                  echo 'github url checkout'
             }
         }
-        stage('codecompile with shakeer'){
+        stage('codecompile'){
             steps{
                 echo 'starting compiling'
                 sh 'mvn compile'
             }
         }
-        stage('codetesting with shakeer'){
+        stage('codetesting'){
             steps{
                 sh 'mvn test'
             }
         }
-        stage('qa with shakeer'){
+        stage('qa check'){
             steps{
                 sh 'mvn checkstyle:checkstyle'
             }
         }
-        stage('package with shakeer'){
+        stage('package the code'){
             steps{
                 sh 'mvn package'
             }
         }
         stage('run dockerfile'){
           steps{
-               sh 'docker build -t myimg .'
+               sh 'docker build -t myimg1 .'
+               sh 'docker tag myimg1 manoj633/healthcare:1'
            }
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8092:8092 --name c002 myimg'
+                sh 'docker run -dt -p 8084:8082 --name c001 manoj633/healthcare'
             }
-        }
+        }   
     }
 }
-
